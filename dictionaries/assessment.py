@@ -28,8 +28,17 @@ def count_words(phrase):
         >>> print_dict(count_words("Porcupine see, porcupine do."))
         {'Porcupine': 1, 'do.': 1, 'porcupine': 1, 'see,': 1}
     """
+    # Creating a list of all the words from the phrase
+    phrase_list = phrase.split()
+    # Creating an empty dictionary to store words and their counts
+    phrase_dict = {}
 
-    return {}
+    # Iterating through the list of words and looking at each word
+    for word in phrase_list:
+        # Adding the word in the dictionary and incrementing the value by 1
+        phrase_dict[word] = phrase_dict.get(word, 0) + 1
+
+    return phrase_dict
 
 
 def get_melon_price(melon_name):
@@ -53,8 +62,16 @@ def get_melon_price(melon_name):
         >>> get_melon_price('Tomato')
         'No price found'
     """
+    # Creating the melon dictionary from the info above
+    melon_dict = {
+        "Watermelon": 2.95,
+        "Cantaloupe": 2.50,
+        "Musk": 3.25,
+        "Christmas": 14.25,
+    }
 
-    return 0
+    # Returning the price, or else the phrase "No price found"
+    return melon_dict.get(melon_name, "No price found")
 
 
 def word_length_sorted(words):
@@ -75,8 +92,20 @@ def word_length_sorted(words):
         >>> word_length_sorted(["porcupine", "ok"])
         [(2, ['ok']), (9, ['porcupine'])]
     """
+    # Dictionary that has word length as key and list of words as values
+    length_dict = {}
 
-    return []
+    # Iterating through each word in the words argument
+    for word in words:
+        # Assigning the key as the length of each word
+        length_key = len(word)
+        # Dictionary valie is sorted list of the words based on key
+        # Adding a new word to the end of the list of values
+        length_dict[length_key] = (
+            sorted(length_dict.setdefault(length_key, []) + [word]))
+
+    # Returning sorted tuples of all the items
+    return sorted(length_dict.items())
 
 
 def translate_to_pirate_talk(phrase):
@@ -117,8 +146,44 @@ def translate_to_pirate_talk(phrase):
         >>> translate_to_pirate_talk("my student is not a man!")
         'me swabbie be not a man!'
     """
+    eng_to_pirate = {
+        "sir": "matey",
+        "hotel": "fleabag inn",
+        "student": "swabbie",
+        "man": "matey",
+        "professor": "foul blaggart",
+        "restaurant": "galley",
+        "your": "yer",
+        "excuse": "arr",
+        "students": "swabbies",
+        "are": "be",
+        "restroom": "head",
+        "my": "me",
+        "is": "be",
+    }
+    # The string that we are returning translated to pirate speak
+    pirate_talk = ""
+    # Creating a list of the original English words from phrase
+    phrase_list = phrase.split()
 
-    return ""
+    # Iterating through the list of English words from phrase
+    i = 0
+    while i < len(phrase_list):
+        # Using variable word for the current word we are translating
+        word = phrase_list[i]
+
+        # If the word is in our translation dictionary, add to phrase
+        if word in eng_to_pirate:
+            pirate_talk += eng_to_pirate[word]
+        # If not, add original english word
+        else:
+            pirate_talk += word
+        # Add spaces between words if it's not at end of the list
+        if i != len(phrase_list) - 1:
+                pirate_talk += " "
+        i += 1
+
+    return pirate_talk
 
 
 def kids_game(names):

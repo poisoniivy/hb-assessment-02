@@ -32,7 +32,19 @@ def without_duplicates(words):
         [2, 33333, 111111]
     """
 
-    return []
+    # Solution using 'set' and 'list' constructor functions
+    return list(set(words))
+
+    # Solution using dictionaries
+    # no_duplicates = {}
+
+    # i = 0
+    # while i < len(words):
+    #     if words[i] not in no_duplicates:
+    #         no_duplicates[words[i]] = 1
+    #     i += 1
+
+    # return no_duplicates.keys()
 
 
 def find_unique_common_items(items1, items2):
@@ -61,8 +73,7 @@ def find_unique_common_items(items1, items2):
         >>> sorted(find_unique_common_items(["2", "1", 2], [2, 1]))
         [2]
     """
-
-    return []
+    return list(set(items1) & set(items2))
 
 def get_sum_zero_pairs(numbers):
     """Given list of numbers, return list of pairs summing to 0.
@@ -90,8 +101,35 @@ def get_sum_zero_pairs(numbers):
         >>> sort_pairs( get_sum_zero_pairs([1, 3, -1, 1, 1, 0]) )
         [[-1, 1], [0, 0]]
     """
+    # Using sets, lists, tuples to solve
+    # pairs = set()
+    # i = 0
+    # while i < len(numbers):
+    #     j = i
+    #     while j < len(numbers):
+    #         if numbers[i] + numbers[j] == 0:
+    #             pair = tuple(sorted([numbers[i], numbers[j]]))
+    #             pairs.add(pair)
+    #         j += 1
+    #     i += 1
 
-    return []
+    # return list(pairs)
+
+    pairs = {}
+    i = 0
+    j = 0
+    while i < len(numbers):
+        # print i
+        while j < len(numbers):
+            # print "i and j:", numbers[i], numbers[j]
+            if (numbers[i] + numbers[j] == 0
+                    and numbers[j] not in pairs):
+                pairs[numbers[i]] = [numbers[i], numbers[j]]
+            j += 1
+        j = 0
+        i += 1
+
+    return pairs.values()
 
 
 def top_chars(phrase):
@@ -118,8 +156,41 @@ def top_chars(phrase):
     Do not count spaces, but count all other characters.
 
     """
+    # dictionary of letter as key and number or occurences as value
+    char_count = {}
+    # dict where number of occurences is key and letter list as values
+    num_count = {}
 
-    return []
+    i = 0
+
+    while i < len(phrase):
+
+        letter = phrase[i]
+
+        if letter not in char_count:
+            char_count[letter] = 1
+            num_count.setdefault(1, []).append(letter)
+            # print char_count
+            # print num_count
+
+        else:
+            num_count_key = char_count[letter]
+            num_count[num_count_key].remove(letter)
+            num_count.setdefault((num_count_key + 1), []).append(letter)
+            char_count[letter] += 1
+            # print char_count
+            # print num_count
+        i += 1
+
+    # removing the spaces
+    space_key = char_count[" "]
+    del char_count[" "]
+    max_key = max(sorted(char_count.keys()))
+
+    return sorted(num_count[max_key])
+
+    print char_count
+    print num_count
 
 #####################################################################
 # You can ignore everything below this.
