@@ -73,6 +73,7 @@ def find_unique_common_items(items1, items2):
         >>> sorted(find_unique_common_items(["2", "1", 2], [2, 1]))
         [2]
     """
+    # Set math
     return list(set(items1) & set(items2))
 
 def get_sum_zero_pairs(numbers):
@@ -160,37 +161,31 @@ def top_chars(phrase):
     char_count = {}
     # dict where number of occurences is key and letter list as values
     num_count = {}
+    # NOTE: Used two dictionaries. Could think about a simpler solution
 
     i = 0
 
     while i < len(phrase):
 
         letter = phrase[i]
-
-        if letter not in char_count:
+        # Adding the first letter in the char_count dictionary and
+        # appending that letter to the "1" value of num_count dictionary
+        if letter not in char_count and letter != " ":
             char_count[letter] = 1
             num_count.setdefault(1, []).append(letter)
-            # print char_count
-            # print num_count
-
-        else:
+        # Increasing number of that letter in char count
+        # Removing that letter from previous list in num count to new list
+        # need to two dictionaries to look up the number of occurences
+        elif letter != " ":
             num_count_key = char_count[letter]
             num_count[num_count_key].remove(letter)
             num_count.setdefault((num_count_key + 1), []).append(letter)
             char_count[letter] += 1
-            # print char_count
-            # print num_count
         i += 1
 
-    # removing the spaces
-    space_key = char_count[" "]
-    del char_count[" "]
-    max_key = max(sorted(char_count.keys()))
+    max_val = sorted(num_count.keys())[-1]
 
-    return sorted(num_count[max_key])
-
-    print char_count
-    print num_count
+    return sorted(num_count[max_val])
 
 #####################################################################
 # You can ignore everything below this.

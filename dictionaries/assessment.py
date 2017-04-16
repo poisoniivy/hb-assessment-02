@@ -231,8 +231,33 @@ def kids_game(names):
     a dictionary (with the super-fast lookup they provide) can help;
     good solutions here will definitely require a dictionary.
     """
+    # Creating dictionary of words with starting letter as key
+    # Words in values list appear in order of names
+    word_lookup = {}
 
-    return []
+    # The results word list from the game
+    results = []
+
+    # Creating a dictionary of words before playing game
+    for word in names:
+        first_letter = word[0]
+        word_lookup.setdefault(first_letter, []).append(word)
+
+    # Setting up game. The first word to look up is the first word in names
+    last_letter = names[0][0]
+
+    # Playing until there are no more words in a list to lookup
+    # or there are no words to look up from the last letter
+    while(last_letter in word_lookup and word_lookup[last_letter] != []):
+        # This is the next word to add to the results
+        next_word = word_lookup[last_letter][0]
+        results.append(next_word)
+        # Removing the word from the lookup dictionary
+        word_lookup[last_letter] = word_lookup[last_letter][1:]
+        # Setting up the next word to look up based on the last letter
+        last_letter = next_word[-1]
+
+    return results
 
 #####################################################################
 # You can ignore everything below this.
