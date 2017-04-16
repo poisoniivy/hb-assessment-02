@@ -1,0 +1,3 @@
+What is the method for adding an element to a set? > .add()
+What does pwd stand for? > print working directory
+Python lists are mutable, iterable, and what? > ordered
