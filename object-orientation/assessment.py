@@ -94,7 +94,6 @@ class Exam(object):
             for q in self.questions:
                 if q.ask_and_evaluate():
                     total_correct += 1
-                    print "correct: ", total_correct
             return (float(total_correct) / float(total_num_questions)) * 100
 
 
@@ -147,7 +146,7 @@ def example():
     f = open("test.txt")
 
     for line in f:
-        q, a = line.split(" > ")
+        q, a = line.rstrip().split(" > ")
         week_2_assessment.add_question(q, a)
     print week_2_assessment
     s = StudentExam(hackbrighter, week_2_assessment)
