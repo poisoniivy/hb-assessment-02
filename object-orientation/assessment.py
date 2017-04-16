@@ -32,7 +32,6 @@ An instance attribute is something that is assigned of an object's instance.
 class Student(object):
     """Class Student that stores all the information in a dictionary."""
     student_info = {}
-
     def __init__(self, first_name, last_name, address):
         """Instantiates strings firstname, lastname, and address of student."""
         self.student_info["first_name"] = first_name
@@ -47,7 +46,6 @@ class Student(object):
 
 class Question(object):
     """Class Question of just one question and answer. """
-
     def __init__(self, question, answer):
         """Instantiates with strings question and answer."""
         self.question_info = {}
@@ -68,13 +66,13 @@ class Question(object):
 
 
 class Exam(object):
-    """Class Exam contains list of questions.
-    """
+    """Class Exam contains list of questions."""
     # list of Questions in the exam
     questions = []
 
     def __init__(self, name):
         self.name = name
+        # self.questions = []
 
     def __repr__(self):
         return "{} exam contains {} questions.".format(
@@ -96,8 +94,63 @@ class Exam(object):
             for q in self.questions:
                 if q.ask_and_evaluate():
                     total_correct += 1
+                    print "correct: ", total_correct
             return (float(total_correct) / float(total_num_questions)) * 100
 
 
-class StudentExam(object, Exam):
-    pass
+class StudentExam(object):
+    """Object of student and test score. """
+    score = 0
+
+    def __init__(self, student, exam):
+        self.student = student
+        self.exam = exam
+
+    def __repr__(self):
+        return "Student {} for exam {}.".format(
+            self.student, self.exam)
+
+    def take_test(self):
+        self.score = self.exam.administer()
+        print self.score
+
+
+class Quiz(Exam):
+    """Quiz Class"""
+    def __repr__(self):
+        return "{} quiz contains {} questions.".format(
+            self.name, len(self.questions))
+
+    def administer(self):
+        """ Returns pass/fail."""
+        total_correct = 0
+        total_num_questions = len(self.questions)
+
+        if total_num_questions == 0:
+            return None
+        else:
+            for q in self.questions:
+                if q.ask_and_evaluate():
+                    total_correct += 1
+            if (float(total_correct) / float(total_num_questions)) * 100 > 0.5:
+                return 1
+            else:
+                return 0
+
+
+def example():
+    """ Example of using classes to create exam, student and administers exam."""
+
+    hackbrighter = Student("Ivy", "Chen", "San Francisco")
+    week_2_assessment = Exam("Big Test")
+
+    f = open("test.txt")
+
+    for line in f:
+        q, a = line.split(" > ")
+        week_2_assessment.add_question(q, a)
+    print week_2_assessment
+    s = StudentExam(hackbrighter, week_2_assessment)
+    s.take_test()
+
+example()
